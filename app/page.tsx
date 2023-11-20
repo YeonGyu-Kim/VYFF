@@ -1,5 +1,5 @@
-import Image from 'next/image';
+import UserForm from '@/components/form';
 
 export default function Home() {
-  return <div>VYFF</div>;
+  return <UserForm />;
 }
