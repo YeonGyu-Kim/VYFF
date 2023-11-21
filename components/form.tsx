@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Card } from './ui/card';
 
 const userSchema = z.object({
   username: z.string(),
@@ -43,34 +44,28 @@ export default function UserForm() {
     },
   });
 
-  const onSubmit = (data: unknown) => {
-    console.log(form);
-
+  const onSubmit = (data: z.infer<typeof userSchema>) => {
     console.log(data);
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-        <FormField
-          control={form.control}
-          name='username'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>이름</FormLabel>
-              <FormControl>
-                <Input placeholder='이름' {...field} />
-              </FormControl>
-
-              {/*  <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage /> */}
-            </FormItem>
-          )}
-        />
-        <Button type='submit'>Submit</Button>
-      </form>
-    </Form>
+    <form
+      className='flex justify-center items-center overflow-x-hidden inset-0 overflow-y-auto fixed z-50'
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Card className='relative w-4/6 max-w-xl p-20'>
+        <div className='flex flex-col gap-y-4 text-sm'>
+          <div>
+            <label>이름</label>
+            <Input {...register('username')} placeholder='이름' type='text' />
+          </div>
+          <div>
+            <label>이메일</label>
+            <Input {...register('email')} placeholder='이메일' type='email' />
+          </div>
+          <Button type='submit'>확인</Button>
+        </div>
+      </Card>
+    </form>
   );
 }
