@@ -16,13 +16,14 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card } from './ui/card';
+import addUser from '@/app/actions/addUser';
 
 const userSchema = z.object({
   username: z.string(),
   email: z.string().email(),
 });
 
-type UserSchema = z.infer<typeof userSchema>;
+export type UserSchema = z.infer<typeof userSchema>;
 
 export default function UserForm() {
   const {
@@ -44,8 +45,8 @@ export default function UserForm() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof userSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: UserSchema) => {
+    await addUser(data);
   };
 
   return (
