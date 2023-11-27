@@ -9,7 +9,16 @@ generator client {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id String  @id @default(uuid())
   email String  @unique
-  username  String?
+  username  String
+}
+
+model Detail {
+  id String  @id @default(uuid())
+  name String  
+  gender String
+  habitat String
+  feature String
+
 }
