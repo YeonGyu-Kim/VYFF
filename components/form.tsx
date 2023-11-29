@@ -17,6 +17,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Card } from './ui/card';
 import addUser from '@/app/actions/addUser';
+import Notice from './Notice';
 
 const userSchema = z.object({
   username: z.string(),
@@ -56,6 +57,7 @@ export default function UserForm() {
     >
       <Card className='relative w-4/6 max-w-xl p-20'>
         <div className='flex flex-col gap-y-4 text-sm'>
+          <Notice />
           <div>
             <label>이름</label>
             <Input {...register('username')} placeholder='이름' type='text' />
