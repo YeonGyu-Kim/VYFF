@@ -4,8 +4,8 @@ import MainPage from '@/components/Main';
 export default function Home() {
   return (
     <main>
-      {/* <UserForm /> */}
-      <MainPage />
+      <UserForm />
+      {/*  <MainPage /> */}
     </main>
   );
 }

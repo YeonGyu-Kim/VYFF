@@ -18,6 +18,8 @@ import { Input } from '@/components/ui/input';
 import { Card } from './ui/card';
 import addUser from '@/app/actions/addUser';
 import Notice from './Notice';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const userSchema = z.object({
   username: z.string(),
@@ -27,6 +29,7 @@ const userSchema = z.object({
 export type UserSchema = z.infer<typeof userSchema>;
 
 export default function UserForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -47,7 +50,12 @@ export default function UserForm() {
   });
 
   const onSubmit = async (data: UserSchema) => {
-    await addUser(data);
+    signIn('credentials', {
+      ...data,
+      redirect: false,
+    });
+    router.refresh();
+    //await addUser(data);
   };
 
   return (
