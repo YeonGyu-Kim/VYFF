@@ -50,12 +50,12 @@ export default function UserForm() {
   });
 
   const onSubmit = async (data: UserSchema) => {
-    signIn('credentials', {
+    /*   signIn('credentials', {
       ...data,
       redirect: false,
     });
-    router.refresh();
-    //await addUser(data);
+    router.refresh(); */
+    await addUser(data).then((callback) => console.log(callback));
   };
 
   return (
