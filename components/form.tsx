@@ -18,8 +18,10 @@ import { Input } from '@/components/ui/input';
 import { Card } from './ui/card';
 import addUser from '@/app/actions/addUser';
 import Notice from './Notice';
-import { signIn } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const userSchema = z.object({
   username: z.string(),
@@ -28,7 +30,7 @@ const userSchema = z.object({
 
 export type UserSchema = z.infer<typeof userSchema>;
 
-export default function UserForm() {
+export default function UserForm({ currentUser }: any) {
   const router = useRouter();
   const {
     register,
@@ -50,12 +52,25 @@ export default function UserForm() {
   });
 
   const onSubmit = async (data: UserSchema) => {
-    /*   signIn('credentials', {
-      ...data,
-      redirect: false,
-    });
-    router.refresh(); */
-    await addUser(data).then((callback) => console.log(callback));
+    if (currentUser) {
+      signIn('credentials', {
+        ...data,
+        redirect: false,
+      });
+      router.refresh();
+    } else {
+      const user = await addUser(data);
+      if (user) {
+        const userData = {
+          username: user.username,
+          email: user.email,
+        };
+        signIn('credentials', {
+          ...userData,
+          redirect: true,
+        }).then(() => toast.success('감사합니다'));
+      }
+    }
   };
 
   return (
@@ -77,6 +92,7 @@ export default function UserForm() {
           <Button type='submit'>확인</Button>
         </div>
       </Card>
+      <ToastContainer />
     </form>
   );
 }
