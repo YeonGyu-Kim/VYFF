@@ -20,8 +20,7 @@ import addUser from '@/app/actions/addUser';
 import Notice from './Notice';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const userSchema = z.object({
   username: z.string(),
@@ -68,7 +67,7 @@ export default function UserForm({ currentUser }: any) {
         signIn('credentials', {
           ...userData,
           redirect: true,
-        }).then(() => toast.success('감사합니다'));
+        });
       }
     }
   };
@@ -92,7 +91,6 @@ export default function UserForm({ currentUser }: any) {
           <Button type='submit'>확인</Button>
         </div>
       </Card>
-      <ToastContainer />
     </form>
   );
 }
