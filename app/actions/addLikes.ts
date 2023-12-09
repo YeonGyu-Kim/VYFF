@@ -13,14 +13,12 @@ export default async function addLikes(id: string) {
 
   if (!currentUser) return null;
 
-  console.log(likes);
-
   if (likes) {
     let user = [...(likes.likes || [])];
     user.push(currentUser?.id);
     const data = await db.detail.update({
       where: {
-        id: id,
+        id,
       },
       data: {
         likes: user,
