@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import Detail from './Detail';
@@ -7,8 +9,16 @@ import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
+import { DialogContent, DialogDescription } from '@radix-ui/react-dialog';
+import { useState } from 'react';
+import Alert from './Alert';
 
 export default function MainPage() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
   return (
     <div className='w-1/2 mx-auto'>
       <Card className='p-12 space-y-2'>
@@ -18,7 +28,11 @@ export default function MainPage() {
           <Label>(번호를 입력하십시오.)</Label>
         </div>
         <Input type='number' placeholder='ex) 32' />
-        <Button>확인</Button>
+        <Dialog open={isOpen} onOpenChange={toggleOpen}>
+          <Button onClick={toggleOpen}>확인</Button>
+          <Alert />
+        </Dialog>
+
         {/* <Dialog>
       <DialogTrigger>
         <Grid />
