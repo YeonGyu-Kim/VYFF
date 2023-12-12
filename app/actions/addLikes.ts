@@ -3,11 +3,11 @@
 import { db } from '@/lib/db';
 import getCurrentUser from './getCurrentUser';
 
-export default async function addLikes(id: string) {
+export default async function addLikes(number: string) {
   const currentUser = await getCurrentUser();
   const likes = await db.detail.findUnique({
     where: {
-      id: id,
+      name: `fish${number}`,
     },
   });
 
@@ -18,7 +18,7 @@ export default async function addLikes(id: string) {
     user.push(currentUser?.id);
     const data = await db.detail.update({
       where: {
-        id,
+        name: `fish${number}`,
       },
       data: {
         likes: user,
@@ -26,13 +26,4 @@ export default async function addLikes(id: string) {
     });
     return data;
   }
-
-  /*   const detail = await db.detail.update({
-    where: {
-      id: currentUser.id,
-    },
-    data: {
-      likes,
-    },
-  }); */
 }

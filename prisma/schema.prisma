@@ -17,9 +17,6 @@ model User {
 
 model Detail {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
-  name            String  
-  gender          String
-  habitat         String
-  feature         String
+  name            String  @unique
   likes           String[] @db.ObjectId
 }

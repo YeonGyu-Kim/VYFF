@@ -6,8 +6,12 @@ export default async function Home() {
   const currentUser = await getCurrentUser();
 
   return (
-    <main>
-      {currentUser ? <MainPage /> : <UserForm currentUser={currentUser} />}
-    </main>
+    <>
+      {currentUser ? (
+        <MainPage currentUser={currentUser} />
+      ) : (
+        <UserForm currentUser={currentUser} />
+      )}
+    </>
   );
 }

@@ -1,21 +1,19 @@
 'use client';
 
-import Image from 'next/image';
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import Detail from './Detail';
-import Grid from './Grid';
-import { signOut } from 'next-auth/react';
+import { Dialog } from '@/components/ui/dialog';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
-import { DialogContent, DialogDescription } from '@radix-ui/react-dialog';
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import Alert from './Alert';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Error from './Error';
+import { signOut } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const schema = z
   .object({
@@ -28,14 +26,12 @@ const schema = z
 
 type Schema = z.infer<typeof schema>;
 
-export default function MainPage() {
+export default function MainPage({ currentUser }: any) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-    reset,
-    getValues,
   } = useForm<Schema>({
     resolver: zodResolver(schema),
   });
@@ -53,9 +49,17 @@ export default function MainPage() {
       setIsOpen((prev) => !prev);
     }
   };
+
+  useEffect(() => {
+    toast.success(`${currentUser.username}님 반갑습니다!`);
+  }, []);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='w-1/2 mx-auto'>
-      <Card className='p-12 space-y-2'>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='flex justify-center items-center overflow-x-hidden inset-0 overflow-y-auto fixed z-50'
+    >
+      <Card className='relative px-8 py-12 mx-8 w-full space-y-3 max-w-xl'>
         <div>
           <Label>어떤 생선의 정보를 조회하시겠습니까?</Label>
           <br />
@@ -69,11 +73,11 @@ export default function MainPage() {
         />
         {errors.number && <Error>{errors.number.message}</Error>}
         <Dialog open={isOpen} onOpenChange={toggleOpen}>
-          <Button>확인</Button>
-          <Alert number={number} />
+          <Button className='w-full'>확인</Button>
+          <Alert number={number} setIsOpen={setIsOpen} />
         </Dialog>
-        {/* <div onClick={() => signOut()}>로그아웃</div> */}
       </Card>
+      {/* <div onClick={() => signOut()}>로그아웃</div> */}
     </form>
   );
 }
