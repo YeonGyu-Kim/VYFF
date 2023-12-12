@@ -5,12 +5,21 @@ import { db } from '@/lib/db';
 
 export default async function addUser(data: UserSchema) {
   const { email, username } = data;
-  const user = await db.user.create({
-    data: {
-      email,
-      username,
+  const existUser = await db.user.findUnique({
+    where: {
+      email: email,
     },
   });
 
-  return user;
+  if (!existUser) {
+    const newUser = await db.user.create({
+      data: {
+        email,
+        username,
+      },
+    });
+    return newUser;
+  } else {
+    return existUser;
+  }
 }
