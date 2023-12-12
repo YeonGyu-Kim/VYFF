@@ -1,6 +1,6 @@
 'use server';
 
-import { UserSchema } from '@/components/Form';
+import { UserSchema } from '@/components/UserForm';
 import { db } from '@/lib/db';
 
 export default async function addUser(data: UserSchema) {
