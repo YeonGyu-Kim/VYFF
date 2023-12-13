@@ -10,8 +10,6 @@ export default async function Detail({ id }: { id: string }) {
     return;
   }
 
-  console.log(detail);
-
   return (
     <div>
       <DialogContent>

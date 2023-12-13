@@ -23,7 +23,7 @@ export default async function RootLayout({
         <AuthContext>
           <ToastContainer
             position='top-center'
-            autoClose={2000}
+            autoClose={3000}
             theme='light'
           />
           {children}

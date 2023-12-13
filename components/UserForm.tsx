@@ -3,17 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card } from './ui/card';
 import addUser from '@/app/actions/addUser';
@@ -22,6 +12,7 @@ import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Error from './Error';
+import { PuffLoader } from 'react-spinners';
 
 const userSchema = z.object({
   username: z.string().min(1, '이름을 입력해주세요.'),
@@ -62,7 +53,7 @@ export default function UserForm({ currentUser }: any) {
         signIn('credentials', {
           ...userData,
           redirect: true,
-        });
+        }).then(() => <PuffLoader size={100} color='red' />);
       }
     }
   };
@@ -73,8 +64,12 @@ export default function UserForm({ currentUser }: any) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Card className='relative px-8 py-12 mx-4'>
-        <div className='flex flex-col gap-y-4 text-sm'>
-          <Notice />
+        <div className='flex flex-col gap-y-4 text-md'>
+          <div>[안내 사항]</div>
+          <div className='mb-6'>
+            개인정보 입력이 부정확할 시, 생선의 소식을 접하는데 불이익이 있을 수
+            있습니다.
+          </div>
           <div>
             <label>이름</label>
             <Input {...register('username')} placeholder='이름' type='text' />
@@ -85,7 +80,9 @@ export default function UserForm({ currentUser }: any) {
             <Input {...register('email')} placeholder='이메일' type='email' />
             {errors.email && <Error>{errors.email.message}</Error>}
           </div>
-          <Button type='submit'>확인</Button>
+          <Button className='mt-2' type='submit'>
+            확인
+          </Button>
         </div>
       </Card>
     </form>

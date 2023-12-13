@@ -14,13 +14,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Error from './Error';
 import { signOut } from 'next-auth/react';
 import { toast } from 'react-toastify';
+import Notice from './Notice';
 
 const schema = z
   .object({
     number: z.string().min(1, '숫자를 입력해주세요.'),
   })
   .refine((data) => Number(data.number) < 54, {
-    message: '54미만입니다.',
+    message: '54번 생선까지 투표 가능합니다.',
     path: ['number'],
   });
 
@@ -37,6 +38,7 @@ export default function MainPage({ currentUser }: any) {
   });
 
   const [isOpen, setIsOpen] = useState(false);
+  const [removeNotice, setRemoveNotice] = useState(false);
 
   const number = watch('number');
 
@@ -60,24 +62,31 @@ export default function MainPage({ currentUser }: any) {
       className='flex justify-center items-center overflow-x-hidden inset-0 overflow-y-auto fixed z-50'
     >
       <Card className='relative px-8 py-12 mx-8 w-full space-y-3 max-w-xl'>
-        <div>
-          <Label>어떤 생선의 정보를 조회하시겠습니까?</Label>
-          <br />
-          <Label>(번호를 입력하십시오.)</Label>
-        </div>
-        <Input
-          type='text'
-          placeholder='ex) 32'
-          value={Number(number) || ''}
-          {...register('number')}
-        />
-        {errors.number && <Error>{errors.number.message}</Error>}
-        <Dialog open={isOpen} onOpenChange={toggleOpen}>
-          <Button className='w-full'>확인</Button>
-          <Alert number={number} setIsOpen={setIsOpen} />
-        </Dialog>
+        {!removeNotice ? (
+          <>
+            <Notice />
+            <Button onClick={() => setRemoveNotice(true)} className='w-full'>
+              확인
+            </Button>
+          </>
+        ) : (
+          <>
+            <Label>당신의 마음을 사로잡은 생선의 번호를 입력하십시오.</Label>
+            <Input
+              type='text'
+              placeholder='ex) 32'
+              value={Number(number) || ''}
+              {...register('number')}
+            />
+            {errors.number && <Error>{errors.number.message}</Error>}
+            <Dialog open={isOpen} onOpenChange={toggleOpen}>
+              <Button className='w-full'>확인</Button>
+              <Alert number={number} setIsOpen={setIsOpen} />
+            </Dialog>
+          </>
+        )}
       </Card>
-      {/* <div onClick={() => signOut()}>로그아웃</div> */}
+      <div onClick={() => signOut()}>로그아웃</div>
     </form>
   );
 }

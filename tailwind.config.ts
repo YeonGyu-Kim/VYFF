@@ -20,6 +20,7 @@ module.exports = {
         '5': 'repeat(5, minmax(0, 100px))',
       },
       colors: {
+        yellow: '#ff9d00',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
