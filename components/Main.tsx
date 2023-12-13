@@ -20,7 +20,7 @@ const schema = z
   .object({
     number: z.string().min(1, '숫자를 입력해주세요.'),
   })
-  .refine((data) => Number(data.number) < 54, {
+  .refine((data) => Number(data.number) < 55, {
     message: '54번 생선까지 투표 가능합니다.',
     path: ['number'],
   });
