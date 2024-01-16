@@ -1,10 +1,10 @@
 'use client';
 
-import addLikes from '@/app/actions/addLikes';
 import { Button } from './ui/button';
 import { DialogContent, DialogDescription } from './ui/dialog';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import getLikes from '@/app/actions/getLikes';
 
 type AlertProps = {
   number: string;
@@ -17,7 +17,8 @@ export default function Alert({ number, setIsOpen }: AlertProps) {
     setIsOpen((prev) => !prev);
     toast.success('투표가 완료되었습니다!');
     router.push('/thanks');
-    /* const res = await addLikes(number);
+
+    /*  const res = await addLikes(number);
     if (res) router.push('/thanks'); */
   };
   return (

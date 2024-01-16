@@ -1,14 +1,12 @@
 'use server';
 
 import { db } from '@/lib/db';
-import getCurrentUser from './getCurrentUser';
 
 export default async function getLikes() {
-  const top3 = await db.detail.findMany({
-    take: 3,
-    where: {
-      name: 'fish1',
-    },
-  });
-  return { top3 };
+  const data = await db.detail.findMany();
+
+  const a = data.sort((x, y) => y.likes.length - x.likes.length).slice(0, 3);
+
+  console.log(a);
+  return data;
 }
