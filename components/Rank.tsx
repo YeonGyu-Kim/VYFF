@@ -11,11 +11,14 @@ export default function Rank({ rank }: RankProp) {
 
   return (
     <div>
-      {rank.map((item) => (
-        <>
-          <div>{item.name}</div>
-          <div>{item.likes.length}</div>
-        </>
+      {rank.map((item, index) => (
+        <div key={`${item}-${index}`} className='flex gap-4'>
+          <div>
+            <span>{`${index + 1}위 `}</span>
+            <span>{item.name}</span>
+          </div>
+          <div>{`${item.likes.length}표`}</div>
+        </div>
       ))}
     </div>
   );

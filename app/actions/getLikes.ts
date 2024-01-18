@@ -4,9 +4,7 @@ import { db } from '@/lib/db';
 
 export default async function getLikes() {
   const data = await db.detail.findMany();
+  const top3 = data.sort((x, y) => y.likes.length - x.likes.length).slice(0, 3);
 
-  const a = data.sort((x, y) => y.likes.length - x.likes.length).slice(0, 3);
-
-  console.log(a);
-  return data;
+  return top3;
 }
