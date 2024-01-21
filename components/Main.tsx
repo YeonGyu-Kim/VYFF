@@ -86,7 +86,7 @@ export default function MainPage({ currentUser }: any) {
           </>
         )}
       </Card>
-      {/* <div onClick={() => signOut()}>로그아웃</div> */}
+      <div onClick={() => signOut()}>로그아웃</div>
     </form>
   );
 }

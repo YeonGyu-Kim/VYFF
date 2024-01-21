@@ -4,6 +4,7 @@ import getCurrentUser from './actions/getCurrentUser';
 
 export default async function Home() {
   const currentUser = await getCurrentUser();
+  console.log(currentUser);
 
   return (
     <>

@@ -1,10 +1,10 @@
 'use client';
 
+import addLikes from '@/app/actions/addLikes';
 import { Button } from './ui/button';
 import { DialogContent, DialogDescription } from './ui/dialog';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import getLikes from '@/app/actions/getLikes';
 
 type AlertProps = {
   number: string;
@@ -15,11 +15,16 @@ export default function Alert({ number, setIsOpen }: AlertProps) {
   const router = useRouter();
   const handleBtn = async () => {
     setIsOpen((prev) => !prev);
-    toast.success('투표가 완료되었습니다!');
-    router.push('/thanks');
 
-    /*  const res = await addLikes(number);
-    if (res) router.push('/thanks'); */
+    try {
+      const res = await addLikes(number);
+      if (res) {
+        toast.success('투표가 완료되었습니다!');
+        router.push('/thanks');
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
   return (
     <DialogContent className='max-w-sm md:max-w-xl py-8'>

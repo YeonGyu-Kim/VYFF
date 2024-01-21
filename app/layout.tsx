@@ -5,6 +5,7 @@ import AuthContext from '@/context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import ProviderContext from '@/context/ProviderContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,19 +23,21 @@ export default async function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <AuthContext>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='dark'
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ToastContainer
-              position='top-center'
-              autoClose={3000}
-              theme='light'
-            />
-            {children}
-          </ThemeProvider>
+          <ProviderContext>
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='dark'
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ToastContainer
+                position='top-center'
+                autoClose={3000}
+                theme='light'
+              />
+              {children}
+            </ThemeProvider>
+          </ProviderContext>
         </AuthContext>
       </body>
     </html>

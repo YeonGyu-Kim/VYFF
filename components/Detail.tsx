@@ -1,6 +1,4 @@
 import { DialogContent, DialogDescription } from '@/components/ui/dialog';
-import { Button } from './ui/button';
-import addLikes from '@/app/actions/addLikes';
 import getFishDetail from '@/app/actions/getFishDetail';
 
 export default async function Detail({ id }: { id: string }) {
