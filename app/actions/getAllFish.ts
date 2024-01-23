@@ -7,8 +7,6 @@ export default async function getAllFish() {
   const currentUser = await getCurrentUser();
   const data = await db.detail.findMany();
 
-  if (!currentUser) return;
-
-  const votedFish = data.find((item) => item.name === currentUser.voted_num);
+  const votedFish = data.find((item) => item.name === currentUser?.voted_num);
   return votedFish;
 }

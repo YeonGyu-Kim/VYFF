@@ -6,14 +6,16 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import getCurrentUser from '../actions/getCurrentUser';
+import getAllFish from '../actions/getAllFish';
 
 export default async function Page() {
   const currentUser = await getCurrentUser();
+  const detail = await getAllFish();
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['top3'],
-    queryFn: async () => getLikes(),
+    queryKey: ['fish', 'top3'],
+    queryFn: () => getLikes(),
   });
 
   return (
@@ -27,7 +29,7 @@ export default async function Page() {
           <span>당신이 선택한 생선의 소식을</span>
           <span>메일을 통해 확인해보세요!</span>
         </div>
-        <Rank currentUser={currentUser} />
+        <Rank currentUser={currentUser} detail={detail} />
       </section>
     </HydrationBoundary>
   );

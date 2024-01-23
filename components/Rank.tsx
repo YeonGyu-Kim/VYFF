@@ -4,17 +4,13 @@ import useGetFish from '@/hooks/useGetFish';
 import Image from 'next/image';
 import { Card } from './ui/card';
 
-export default function Rank({ currentUser }: any) {
-  const { useGetAll, useGetTop3 } = useGetFish();
+export default function Rank({ currentUser, detail }: any) {
+  const { useGetTop3 } = useGetFish();
   const { data: top3 } = useGetTop3();
-  const { data: all } = useGetAll();
 
-  if (!top3 || !all) {
+  if (!top3) {
     return;
   }
-
-  const votedFish = all.find((item) => item.name === currentUser.voted_num);
-  console.log(all);
 
   return (
     <div className='flex flex-col items-center w-full gap-6'>
@@ -29,7 +25,7 @@ export default function Rank({ currentUser }: any) {
           />
           <div className='flex flex-col gap-2'>
             <span>{`${currentUser.voted_num}번 생선`}</span>
-            <span> {`${votedFish?.likes.length}표`}</span>
+            <span> {`${detail.likes.length}표`}</span>
           </div>
         </div>
       </Card>

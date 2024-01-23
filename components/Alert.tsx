@@ -18,7 +18,6 @@ export default function Alert({ number, setIsOpen }: AlertProps) {
 
     try {
       const res = await addLikes(number);
-      console.log(res);
 
       if (res === '이미 투표가 완료되었습니다.') {
         toast(res, {
