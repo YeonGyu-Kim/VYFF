@@ -72,12 +72,12 @@ export default function UserForm({ currentUser }: any) {
           </div>
           <div>
             <label>이름</label>
-            <Input {...register('username')} placeholder='이름' type='text' />
+            <Input {...register('username')} placeholder='이름' />
             {errors.username && <Error>{errors.username.message}</Error>}
           </div>
           <div>
             <label>이메일</label>
-            <Input {...register('email')} placeholder='이메일' type='email' />
+            <Input {...register('email')} placeholder='이메일' />
             {errors.email && <Error>{errors.email.message}</Error>}
           </div>
           <Button className='mt-2' type='submit'>

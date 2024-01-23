@@ -13,7 +13,7 @@ model User {
   username        String
   email           String   @unique
   createdAt       DateTime @default(now())
-  voted           Boolean  @default(false)     
+  voted_num       String?  
 }
 
 model Detail {

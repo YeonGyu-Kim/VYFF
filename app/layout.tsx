@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Palanquin, Nanum_Gothic } from 'next/font/google';
 import './globals.css';
 import AuthContext from '@/context/AuthContext';
 import { ToastContainer } from 'react-toastify';
@@ -7,7 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ProviderContext from '@/context/ProviderContext';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Nanum_Gothic({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -32,7 +35,7 @@ export default async function RootLayout({
             >
               <ToastContainer
                 position='top-center'
-                autoClose={3000}
+                autoClose={2500}
                 theme='light'
               />
               {children}

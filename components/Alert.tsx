@@ -18,11 +18,18 @@ export default function Alert({ number, setIsOpen }: AlertProps) {
 
     try {
       const res = await addLikes(number);
-      if (res) {
+      console.log(res);
+
+      if (res === '이미 투표가 완료되었습니다.') {
+        toast(res, {
+          icon: '❗',
+        });
+      } else {
         toast.success('투표가 완료되었습니다!');
-        router.push('/thanks');
       }
+      router.push('/thanks');
     } catch (e) {
+      toast.error('에러가 발생하였습니다.');
       console.error(e);
     }
   };

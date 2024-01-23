@@ -6,23 +6,25 @@ import getCurrentUser from './getCurrentUser';
 export default async function addLikes(number: string) {
   const currentUser = await getCurrentUser();
 
-  if (!currentUser) return null;
-
-  const likes = await db.detail.findUnique({
+  const detail = await db.detail.findUnique({
     where: {
       name: number,
     },
   });
 
-  const isVoted = await db.user.findUnique({
-    where: {
-      id: currentUser.id,
-    },
-  });
+  if (!currentUser || !detail) return;
 
-  if (likes) {
-    let user = [...(likes.likes || [])];
-    user.push(currentUser?.id);
+  if (!currentUser.voted_num) {
+    let user = [...(detail?.likes || [])];
+    user.push(currentUser.id);
+    await db.user.update({
+      where: {
+        id: currentUser.id,
+      },
+      data: {
+        voted_num: number,
+      },
+    });
     const data = await db.detail.update({
       where: {
         name: number,
@@ -32,5 +34,7 @@ export default async function addLikes(number: string) {
       },
     });
     return data;
+  } else {
+    return '이미 투표가 완료되었습니다.';
   }
 }
