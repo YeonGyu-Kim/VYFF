@@ -15,8 +15,12 @@ export default async function Page() {
 
   await queryClient.prefetchQuery({
     queryKey: ['fish', 'top3'],
-    queryFn: () => getLikes(),
+    queryFn: getLikes,
   });
+
+  if (!currentUser || !detail) {
+    return;
+  }
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
