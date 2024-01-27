@@ -21,3 +21,8 @@ model Detail {
   name            String  @unique
   likes           String[] @db.ObjectId
 }
+
+model Total {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  vote_all        String[] @db.ObjectId 
+}

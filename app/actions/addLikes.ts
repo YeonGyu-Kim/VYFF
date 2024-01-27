@@ -12,6 +12,12 @@ export default async function addLikes(number: string) {
     },
   });
 
+  const voteAll = await db.total.findUnique({
+    where: {
+      id: '65b4df0329ac6349eb1d1d43',
+    },
+  });
+
   if (!currentUser || !detail) return;
 
   if (!currentUser.voted_num) {
@@ -31,6 +37,17 @@ export default async function addLikes(number: string) {
       },
       data: {
         likes: user,
+      },
+    });
+    // 투표 총 개수
+    let vote = [...(voteAll?.vote_all || [])];
+    vote.push(currentUser.id);
+    await db.total.update({
+      where: {
+        id: '65b4df0329ac6349eb1d1d43',
+      },
+      data: {
+        vote_all: vote,
       },
     });
     return data;

@@ -1,11 +1,17 @@
 import getAllFish from '@/app/actions/getAllFish';
 import getLikes from '@/app/actions/getLikes';
+import getTotalCount from '@/app/actions/getTotalCount';
 import { useQuery } from '@tanstack/react-query';
 
 type FishProps = {
   id: string;
   likes: string[];
   name: string;
+}[];
+
+type VoteAllProps = {
+  id: string;
+  vote_all: string[];
 }[];
 
 export default function useGetFish() {
@@ -16,5 +22,12 @@ export default function useGetFish() {
     });
   };
 
-  return { useGetTop3 };
+  const useGetVoteAll = () => {
+    return useQuery<VoteAllProps>({
+      queryKey: ['fish', 'all'],
+      queryFn: async () => getTotalCount(),
+    });
+  };
+
+  return { useGetTop3, useGetVoteAll };
 }
