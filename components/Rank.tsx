@@ -14,14 +14,13 @@ export default function Rank({ currentUser, detail }: any) {
   }
 
   const calcPercentage = (count: number, whole: number) => {
-    console.log(count, whole);
     return (count / whole) * 100;
   };
 
   return (
     <div className='flex flex-col items-center w-full gap-6'>
       <Card className='space-y-2 py-6 px-8'>
-        <div className='text-center'>내가 투표한 생선</div>
+        <div className='text-center pb-2'>내가 투표한 생선</div>
         <div className='flex gap-3'>
           <Image
             width={100}
@@ -42,7 +41,7 @@ export default function Rank({ currentUser, detail }: any) {
         </div>
       </Card>
       <Card className='space-y-2 py-6 px-8'>
-        <div className='text-center'>투표현황</div>
+        <div className='text-center pb-2'>투표현황</div>
         <div className='flex flex-col gap-8'>
           {top3.map((item, index) => (
             <div key={`${item}-${index}`} className='flex gap-3'>

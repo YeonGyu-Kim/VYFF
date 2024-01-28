@@ -74,7 +74,7 @@ export default function UserForm({ currentUser }: any) {
         className='flex justify-center items-center overflow-x-hidden inset-0 overflow-y-auto fixed z-50'
         onSubmit={handleSubmit(onSubmit)}
       >
-        {!open && (
+        {!open ? (
           <Card className='relative px-8 py-12 mx-4 w-full max-w-xl'>
             <div className='flex flex-col gap-y-4 text-md'>
               <div>
@@ -92,6 +92,8 @@ export default function UserForm({ currentUser }: any) {
               </Button>
             </div>
           </Card>
+        ) : (
+          <></>
         )}
       </form>
     </>
