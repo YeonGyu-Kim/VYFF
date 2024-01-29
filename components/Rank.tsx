@@ -32,10 +32,14 @@ export default function Rank({ currentUser, detail }: any) {
             <span>{`${currentUser.voted_num}번 생선`}</span>
             <div>
               <span>{`${detail.likes.length}표`}</span>
-              <span>{` / ${calcPercentage(
-                detail.likes.length,
-                voteAll[0].vote_all.length
-              )}%`}</span>
+              <span>
+                {detail.likes.length > 0
+                  ? ` / ${calcPercentage(
+                      detail.likes.length,
+                      voteAll[0].vote_all.length
+                    )}%`
+                  : null}
+              </span>
             </div>
           </div>
         </div>
@@ -57,15 +61,18 @@ export default function Rank({ currentUser, detail }: any) {
                   <span className='text-3xl'>
                     {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
                   </span>
-                  {/*  <span>{` ${index + 1}위 `}</span> */}
                 </div>
                 <span>{`${item.name}번 생선`}</span>
                 <div>
                   <span>{`${item.likes.length}표`}</span>
-                  <span>{` / ${calcPercentage(
-                    item.likes.length,
-                    voteAll[0].vote_all.length
-                  )}%`}</span>
+                  <span>
+                    {item.likes.length > 0
+                      ? ` / ${calcPercentage(
+                          item.likes.length,
+                          voteAll[0].vote_all.length
+                        )}%`
+                      : null}
+                  </span>
                 </div>
               </div>
             </div>
