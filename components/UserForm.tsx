@@ -13,6 +13,7 @@ import Error from './Error';
 import { PuffLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
 import Notice from './Notice';
+import { toast } from 'react-toastify';
 
 const userSchema = z.object({
   username: z.string().min(1, '이름을 입력해주세요.'),
@@ -26,6 +27,7 @@ export type UserSchema = z.infer<typeof userSchema>;
 
 export default function UserForm({ currentUser }: any) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   const {
@@ -37,15 +39,18 @@ export default function UserForm({ currentUser }: any) {
   });
 
   const onSubmit = async (data: UserSchema) => {
+    setIsLoading(false);
+    toast.loading('잠시만 기다려주세요!');
     if (currentUser) {
       signIn('credentials', {
         ...data,
         redirect: false,
       });
+      toast.dismiss();
+      setIsLoading(false);
       router.refresh();
     } else {
       const user = await addUser(data);
-
       if (user) {
         const userData = {
           username: user.username,
@@ -54,7 +59,9 @@ export default function UserForm({ currentUser }: any) {
         signIn('credentials', {
           ...userData,
           redirect: true,
-        }).then(() => <PuffLoader size={100} color='red' />);
+        });
+        toast.dismiss();
+        setIsLoading(false);
       }
     }
   };
@@ -87,7 +94,7 @@ export default function UserForm({ currentUser }: any) {
                 <Input {...register('email')} placeholder='이메일' />
                 {errors.email && <Error>{errors.email.message}</Error>}
               </div>
-              <Button className='mt-2' type='submit'>
+              <Button className='mt-2' type='submit' disabled={isLoading}>
                 확인
               </Button>
             </div>

@@ -5,7 +5,6 @@ import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
-
 import { useEffect, useState } from 'react';
 import Alert from './Alert';
 import { useForm } from 'react-hook-form';
@@ -14,7 +13,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Error from './Error';
 import { signOut } from 'next-auth/react';
 import { toast } from 'react-toastify';
-import Notice from './Notice';
 
 const schema = z
   .object({
@@ -61,7 +59,11 @@ export default function MainPage({ currentUser }: any) {
       className='flex justify-center items-center overflow-x-hidden inset-0 overflow-y-auto fixed z-50'
     >
       <Card className='relative px-8 py-12 mx-8 w-full space-y-3 max-w-xl'>
-        <Label>당신의 마음을 사로잡은 생선의 번호를 입력하십시오.</Label>
+        <Label>
+          당신의 마음을 사로잡은 생선의{' '}
+          <span className='text-yellow font-semibold'>번호</span>를
+          입력하십시오.
+        </Label>
         <Input
           type='text'
           placeholder='ex) 32'

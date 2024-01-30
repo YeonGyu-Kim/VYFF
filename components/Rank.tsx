@@ -4,17 +4,19 @@ import useGetFish from '@/hooks/useGetFish';
 import Image from 'next/image';
 import { Card } from './ui/card';
 
-export default function Rank({ currentUser, detail }: any) {
-  const { useGetTop3, useGetVoteAll } = useGetFish();
+export default function Rank({ currentUser }: any) {
+  const { useGetTop3, useGetAllFish, useGetTotalCount } = useGetFish();
   const { data: top3 } = useGetTop3();
-  const { data: voteAll } = useGetVoteAll();
+  const { data: voteAll } = useGetTotalCount();
+  const { data: detail } = useGetAllFish();
 
-  if (!top3 || !voteAll) {
+  if (!top3 || !voteAll || !detail) {
     return;
   }
 
   const calcPercentage = (count: number, whole: number) => {
-    return (count / whole) * 100;
+    const isFloor = ((count / whole) * 100).toString().includes('.');
+    return isFloor ? ((count / whole) * 100).toFixed(1) : (count / whole) * 100;
   };
 
   return (

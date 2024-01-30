@@ -11,22 +11,24 @@ import getTotalCount from '../actions/getTotalCount';
 
 export default async function Page() {
   const currentUser = await getCurrentUser();
-  const detail = await getAllFish();
-  const total = await getTotalCount();
   const queryClient = new QueryClient();
 
   await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ['fish', 'total'],
+      queryFn: getTotalCount,
+    }),
     queryClient.prefetchQuery({
       queryKey: ['fish', 'top3'],
       queryFn: getLikes,
     }),
     queryClient.prefetchQuery({
       queryKey: ['fish', 'all'],
-      queryFn: getTotalCount,
+      queryFn: getAllFish,
     }),
   ]);
 
-  if (!currentUser || !detail) {
+  if (!currentUser) {
     return;
   }
 
@@ -37,7 +39,7 @@ export default async function Page() {
           <span>투표가</span>
           <span>완료되었습니다!</span>
         </div>
-        <Rank currentUser={currentUser} detail={detail} />
+        <Rank currentUser={currentUser} />
       </section>
     </HydrationBoundary>
   );
