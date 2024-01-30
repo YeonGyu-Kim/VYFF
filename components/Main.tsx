@@ -74,7 +74,7 @@ export default function MainPage({ currentUser }: any) {
           <Alert number={number} setIsOpen={setIsOpen} />
         </Dialog>
       </Card>
-      {/* <div onClick={() => signOut()}>로그아웃</div> */}
+      <div onClick={() => signOut()}>로그아웃</div>
     </form>
   );
 }
