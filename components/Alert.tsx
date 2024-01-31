@@ -10,21 +10,22 @@ import { useState } from 'react';
 type AlertProps = {
   number: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function Alert({ number, setIsOpen }: AlertProps) {
+export default function Alert({ number, setIsOpen, setIsLoading }: AlertProps) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const handleBtn = async () => {
     const toastId = toast('잠시만 기다려주세요!', {
       isLoading: true,
     });
-    setIsLoading(true);
+
     setIsOpen((prev) => !prev);
     try {
       const res = await addLikes(number);
       /* if (res) toast.dismiss(toastId); */
       if (res === '이미 투표가 완료되었습니다.') {
+        router.push('/thanks');
         toast.update(toastId, {
           render: res,
           type: toast.TYPE.INFO,
@@ -32,6 +33,7 @@ export default function Alert({ number, setIsOpen }: AlertProps) {
           isLoading: false,
         });
       } else {
+        router.push('/thanks');
         toast.update(toastId, {
           render: '투표가 완료되었습니다!',
           type: toast.TYPE.SUCCESS,
@@ -40,9 +42,9 @@ export default function Alert({ number, setIsOpen }: AlertProps) {
         });
       }
       setIsLoading(false);
-      router.push('/thanks');
     } catch (e) {
       toast.error('에러가 발생하였습니다.');
+      setIsLoading(false);
       console.error(e);
     }
   };
@@ -52,9 +54,7 @@ export default function Alert({ number, setIsOpen }: AlertProps) {
         <span className='text-yellow'>{number}</span>
         <span>{'번 생선에게 투표 하시겠습니까?'}</span>
       </DialogDescription>
-      <Button disabled={isLoading} onClick={handleBtn}>
-        투표하기
-      </Button>
+      <Button onClick={handleBtn}>투표하기</Button>
     </DialogContent>
   );
 }

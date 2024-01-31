@@ -36,6 +36,7 @@ export default function MainPage({ currentUser }: any) {
   });
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const number = watch('number');
 
@@ -45,6 +46,7 @@ export default function MainPage({ currentUser }: any) {
 
   const onSubmit = (data: Schema) => {
     if (data) {
+      setIsLoading(true);
       setIsOpen((prev) => !prev);
     }
   };
@@ -72,11 +74,17 @@ export default function MainPage({ currentUser }: any) {
         />
         {errors.number && <Error>{errors.number.message}</Error>}
         <Dialog open={isOpen} onOpenChange={toggleOpen}>
-          <Button className='w-full'>확인</Button>
-          <Alert number={number} setIsOpen={setIsOpen} />
+          <Button className='w-full' disabled={isLoading}>
+            확인
+          </Button>
+          <Alert
+            number={number}
+            setIsOpen={setIsOpen}
+            setIsLoading={setIsLoading}
+          />
         </Dialog>
       </Card>
-      <div onClick={() => signOut()}>로그아웃</div>
+      {/*   <div onClick={() => signOut()}>로그아웃</div> */}
     </form>
   );
 }

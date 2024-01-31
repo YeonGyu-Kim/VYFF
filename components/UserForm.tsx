@@ -39,7 +39,7 @@ export default function UserForm({ currentUser }: any) {
   });
 
   const onSubmit = async (data: UserSchema) => {
-    setIsLoading(false);
+    setIsLoading(true);
     toast.loading('잠시만 기다려주세요!');
     if (currentUser) {
       signIn('credentials', {

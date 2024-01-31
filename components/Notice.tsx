@@ -20,8 +20,8 @@ export default function Notice({ open, setOpen }: NoticeProps) {
           <DialogDescription className='text-base break-keep'>
             <i>
               드넓은 잡음의 바다. <br />
-              그곳에서 창조주의 단어로 <br />
-              탄생한 54마리의 생선들.
+              그곳에서 창조주의 단어로 탄생한 <br />
+              54마리의 생선들.
               <br />
               <br />
               그들은 매력적이지만,
@@ -37,7 +37,9 @@ export default function Notice({ open, setOpen }: NoticeProps) {
               <br />
               혹시 모르죠, 당신의 선택으로 그들이 생명을 얻을지도요..! <br />
               <br />
-              자, 그럼 당신의 생선에게 투표하세요! <br />
+              자, 그럼 당신의 생선에게 투표하세요!
+              <br />
+              <br />
               당신이 선택한 생선의 미래에 희망이 있기를.
             </i>
           </DialogDescription>
