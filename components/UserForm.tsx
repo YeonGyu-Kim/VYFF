@@ -10,7 +10,7 @@ import addUser from '@/app/actions/addUser';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Error from './Error';
-import { PuffLoader } from 'react-spinners';
+import { DotLoader, PuffLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
 import Notice from './Notice';
 import { toast } from 'react-toastify';
@@ -47,8 +47,8 @@ export default function UserForm({ currentUser }: any) {
         redirect: false,
       });
       toast.dismiss();
-      setIsLoading(false);
-      router.refresh();
+      //setIsLoading(false);
+      router.push('/thanks');
     } else {
       const user = await addUser(data);
       if (user) {
@@ -61,7 +61,9 @@ export default function UserForm({ currentUser }: any) {
           redirect: true,
         });
         toast.dismiss();
-        setIsLoading(false);
+        //setIsLoading(false);
+      } else {
+        router.refresh();
       }
     }
   };
@@ -82,23 +84,27 @@ export default function UserForm({ currentUser }: any) {
         onSubmit={handleSubmit(onSubmit)}
       >
         {!open ? (
-          <Card className='relative px-8 py-12 mx-4 w-full max-w-xl'>
-            <div className='flex flex-col gap-y-4 text-md'>
-              <div>
-                <label>이름</label>
-                <Input {...register('username')} placeholder='이름' />
-                {errors.username && <Error>{errors.username.message}</Error>}
+          !isLoading ? (
+            <Card className='relative px-8 py-12 mx-4 w-full max-w-xl'>
+              <div className='flex flex-col gap-y-4 text-md'>
+                <div>
+                  <label>이름</label>
+                  <Input {...register('username')} placeholder='이름' />
+                  {errors.username && <Error>{errors.username.message}</Error>}
+                </div>
+                <div>
+                  <label>이메일</label>
+                  <Input {...register('email')} placeholder='이메일' />
+                  {errors.email && <Error>{errors.email.message}</Error>}
+                </div>
+                <Button className='mt-2' type='submit' disabled={isLoading}>
+                  확인
+                </Button>
               </div>
-              <div>
-                <label>이메일</label>
-                <Input {...register('email')} placeholder='이메일' />
-                {errors.email && <Error>{errors.email.message}</Error>}
-              </div>
-              <Button className='mt-2' type='submit' disabled={isLoading}>
-                확인
-              </Button>
-            </div>
-          </Card>
+            </Card>
+          ) : (
+            <DotLoader color='#ff9d00' />
+          )
         ) : (
           <></>
         )}

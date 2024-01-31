@@ -11,8 +11,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Error from './Error';
-import { signOut } from 'next-auth/react';
 import { toast } from 'react-toastify';
+import { DotLoader } from 'react-spinners';
 
 const schema = z
   .object({
@@ -46,7 +46,7 @@ export default function MainPage({ currentUser }: any) {
 
   const onSubmit = (data: Schema) => {
     if (data) {
-      setIsLoading(true);
+      //setIsLoading(true);
       setIsOpen((prev) => !prev);
     }
   };
@@ -60,31 +60,34 @@ export default function MainPage({ currentUser }: any) {
       onSubmit={handleSubmit(onSubmit)}
       className='flex justify-center items-center overflow-x-hidden inset-0 overflow-y-auto fixed z-50'
     >
-      <Card className='relative px-8 py-12 mx-8 w-full space-y-3 max-w-xl'>
-        <Label>
-          당신의 마음을 사로잡은 생선의{' '}
-          <span className='text-yellow font-semibold'>번호</span>를
-          입력하십시오.
-        </Label>
-        <Input
-          type='text'
-          placeholder='ex) 32'
-          value={Number(number) || ''}
-          {...register('number')}
-        />
-        {errors.number && <Error>{errors.number.message}</Error>}
-        <Dialog open={isOpen} onOpenChange={toggleOpen}>
-          <Button className='w-full' disabled={isLoading}>
-            확인
-          </Button>
-          <Alert
-            number={number}
-            setIsOpen={setIsOpen}
-            setIsLoading={setIsLoading}
+      {!isLoading ? (
+        <Card className='relative px-8 py-12 mx-8 w-full space-y-3 max-w-xl'>
+          <Label>
+            당신의 마음을 사로잡은 생선의{' '}
+            <span className='text-yellow font-semibold'>번호</span>를
+            입력하십시오.
+          </Label>
+          <Input
+            type='text'
+            placeholder='ex) 32'
+            value={Number(number) || ''}
+            {...register('number')}
           />
-        </Dialog>
-      </Card>
-      {/*   <div onClick={() => signOut()}>로그아웃</div> */}
+          {errors.number && <Error>{errors.number.message}</Error>}
+          <Dialog open={isOpen} onOpenChange={toggleOpen}>
+            <Button className='w-full' disabled={isLoading}>
+              확인
+            </Button>
+            <Alert
+              number={number}
+              setIsOpen={setIsOpen}
+              setIsLoading={setIsLoading}
+            />
+          </Dialog>
+        </Card>
+      ) : (
+        <DotLoader color='#ff9d00' />
+      )}
     </form>
   );
 }

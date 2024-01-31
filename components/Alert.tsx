@@ -16,6 +16,7 @@ type AlertProps = {
 export default function Alert({ number, setIsOpen, setIsLoading }: AlertProps) {
   const router = useRouter();
   const handleBtn = async () => {
+    setIsLoading(true);
     const toastId = toast('잠시만 기다려주세요!', {
       isLoading: true,
     });
@@ -41,10 +42,11 @@ export default function Alert({ number, setIsOpen, setIsLoading }: AlertProps) {
           isLoading: false,
         });
       }
-      setIsLoading(false);
+      //setIsLoading(false);
     } catch (e) {
       toast.error('에러가 발생하였습니다.');
-      setIsLoading(false);
+      router.refresh();
+      //setIsLoading(false);
       console.error(e);
     }
   };
