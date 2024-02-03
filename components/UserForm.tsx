@@ -78,35 +78,36 @@ export default function UserForm({ currentUser }: any) {
 
   return (
     <>
-      <Notice open={open} setOpen={setOpen} />
+      {/* <Notice open={open} setOpen={setOpen} /> */}
       <form
         className='flex justify-center items-center overflow-x-hidden inset-0 overflow-y-auto fixed z-50'
         onSubmit={handleSubmit(onSubmit)}
       >
-        {!open ? (
-          !isLoading ? (
-            <Card className='relative px-8 py-12 mx-4 w-full max-w-xl'>
-              <div className='flex flex-col gap-y-4 text-md'>
-                <div>
-                  <label>이름</label>
-                  <Input {...register('username')} placeholder='이름' />
-                  {errors.username && <Error>{errors.username.message}</Error>}
-                </div>
-                <div>
-                  <label>이메일</label>
-                  <Input {...register('email')} placeholder='이메일' />
-                  {errors.email && <Error>{errors.email.message}</Error>}
-                </div>
-                <Button className='mt-2' type='submit' disabled={isLoading}>
-                  확인
-                </Button>
+        {!isLoading ? (
+          <Card className='relative px-8 mx-4 py-8 w-full max-w-xl'>
+            <div className='text-center pb-6 leading-7'>
+              [안내사항] <br />
+              귀하의 정보를 입력하고 <span className='text-yellow'>투표</span>
+              하세요!
+            </div>
+            <div className='flex flex-col gap-y-6 text-md'>
+              <div>
+                <label className='ml-1'>이름</label>
+                <Input {...register('username')} placeholder='이름' />
+                {errors.username && <Error>{errors.username.message}</Error>}
               </div>
-            </Card>
-          ) : (
-            <DotLoader color='#ff9d00' />
-          )
+              <div>
+                <label className='ml-1'>이메일</label>
+                <Input {...register('email')} placeholder='이메일' />
+                {errors.email && <Error>{errors.email.message}</Error>}
+              </div>
+              <Button className='mt-2' type='submit' disabled={isLoading}>
+                확인
+              </Button>
+            </div>
+          </Card>
         ) : (
-          <></>
+          <DotLoader color='#ff9d00' />
         )}
       </form>
     </>

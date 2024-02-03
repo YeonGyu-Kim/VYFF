@@ -19,6 +19,8 @@ export default function Rank({ currentUser }: any) {
     return isFloor ? ((count / whole) * 100).toFixed(1) : (count / whole) * 100;
   };
 
+  console.log(top3, voteAll, detail);
+
   return (
     <div className='flex flex-col items-center w-full gap-6'>
       <Card className='space-y-2 py-6 px-8'>
